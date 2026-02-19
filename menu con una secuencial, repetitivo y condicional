@@ -1,0 +1,64 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    int opcion;
+
+    cout << "MENU" << endl;
+    cout << "1 Suma de dos numeros" << endl;
+    cout << "2 Numero mayor" << endl;
+    cout << "3 Contar hasta un numero" << endl;
+    cout << "Seleccione una opcion: ";
+    cin >> opcion;
+
+    if(opcion == 1) {
+        // secuencial 
+        int a, b, suma;
+
+        cout << "Ingrese el primer numero: ";
+        cin >> a;
+        cout << "Ingrese el segundo numero: ";
+        cin >> b;
+
+        suma = a + b;
+
+        cout << "La suma es: " << suma << endl;
+    }
+
+    else if(opcion == 2) {
+        // condicional
+        int num1, num2;
+
+        cout << "ingrese primer numero: ";
+        cin >> num1;
+        cout << "ingrese segundo numero: ";
+        cin >> num2;
+
+        if(num1 > num2) {
+            cout << "el numero mayor es: " << num1 << endl;
+        } else if(num2 > num1) {
+            cout << "el numero mayor es: " << num2 << endl;
+        } else {
+            cout << "ambos numeros son iguales." << endl;
+        }
+    }
+
+    else if(opcion == 3) {
+        // repetitivo 
+        int numero;
+
+        cout << "Ingrese un numero: ";
+        cin >> numero;
+
+        for(int i = 1; i <= numero; i++) {
+            cout << i << endl;
+        }
+    }
+
+    else {
+        cout << "Opcion no valida." << endl;
+    }
+
+    return 0;
+}
