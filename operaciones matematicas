@@ -1,0 +1,27 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main(){
+    int a, b, suma,  resta, multiplicacion, division, modular, potencia, raiz, redondeo, absoluto;
+    cout<<"Ingrese un valor: "; cin>>a;
+    cout<<"Ingrese un valor: "; cin>>b;
+    suma=a+b;
+    resta=a-b;
+    multiplicacion=a*b;
+    division=a/b;
+    modular=a%b; //7entre2=1
+    potencia=pow(a,b); 
+    raiz=sqrt(a); //cbrt(x)
+    redondeo=round(b);
+    absoluto=abs(b);
+    cout<<"La suma es de: "<<suma<<endl;
+    cout<<"La resta es de: "<<resta<<endl;
+    cout<<"La multiplicacion es de: "<<multiplicacion<<endl;
+    cout<<"La division es de: "<<division<<endl;
+    cout<<"La division modular es de: "<<modular<<endl;
+    cout<<"La potencia es de: "<<potencia<<endl;
+    cout<<"La raiz es de: "<<raiz<<endl;
+    cout<<"La redondeo es de: "<<redondeo<<endl;
+    cout<<"La absoluto es de: "<<absoluto<<endl;
+    return 0; 
+}
