@@ -1,0 +1,64 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+
+double discriminante(int a ,int b,int c );
+float unica(int a,int b);
+void R_reales(int a ,int b,int c,float &x1,float &x2);
+void imaginario(int a ,int b ,int d,float &x1,float &x2);
+
+
+
+int main (){
+    
+    double d;
+    int a,b,c;
+    float x1, x2;
+    
+    cout<<"ingrese a";
+    cin>>a;
+    cout<<"ingrese b";
+    cin>>b;
+    cout<<"ingrese c";
+    cin>>c;
+    d = discriminante(a, b, c);
+    if(d == 0){
+        float un = unica(a, b);
+        cout << "la solucion es unica.- " << un; 
+    } else if (d > 0){
+        R_reales(a,b,c,x1,x2);
+        cout << "soluciones reales: "<< endl;
+        cout << "x1: " << x1 <<endl;
+        cout << "x2: " << x2 <<endl;
+    
+    }else {
+        imaginario(a,b,d,x1,x2);
+        cout << "soluciones Imaginarias:" <<endl;
+        cout << "x1: " << x1 <<"+" <<x2 <<"i"<<endl;
+        cout << "x2: " << x1 <<"-" <<x2 <<"i"<<endl;
+    }
+    
+    
+    return 0;
+    
+}
+
+double discriminante(int a ,int b,int c ){
+    return b*b-4*a*c;
+}
+
+float unica(int a,int b){
+    return -b/(2*a);
+    
+}
+void R_reales(int a ,int b,int c,float &x1,float &x2){
+    double d=discriminante(a,b,c);
+    x1=(-b +sqrt(d))/(2*a);
+    x2=(-b -sqrt(d))/(2*a);
+}
+
+void imaginario(int a ,int b ,int d,float &x1,float &x2){
+    x1=-b/(2*a);
+    x2=sqrt(-d)/(2*a);
+}
