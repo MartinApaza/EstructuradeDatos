@@ -1,0 +1,89 @@
+#include <iostream>
+using namespace std;
+
+int factorial(int n);
+int suma(int n);
+int sumaImpar(int n);
+
+int main() {
+    int opcion;
+
+    do {
+        cout << "\n MENU " << endl;
+        cout << "1. Factorial" << endl;
+        cout << "2. Ejercicio Propio" << endl;
+        cout << "3. Ejercicio Adicional" << endl;
+        cout << "0. Salir" << endl;
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+
+        case 1: {
+            int n;
+            cout << "Ingrese n: ";
+            cin >> n;
+
+            if (n < 0)
+                cout << "No existe factorial de negativos." << endl;
+            else
+                cout << "Factorial = " << factorial(n) << endl;
+            break;
+        }
+
+        case 2: {
+            int n;
+            cout << "Ingrese n: ";
+            cin >> n;
+
+            if (n < 0)
+                cout << "Ingrese un numero positivo." << endl;
+            else
+                cout << "Suma = " << suma(n) << endl;
+            break;
+        }
+
+        case 3: {
+            int n;
+            cout << "Ingrese n: ";
+            cin >> n;
+
+            cout << "Suma de impares = " << sumaImpar(n) << endl;
+            break;
+        }
+
+        case 0:
+            cout << "Programa finalizado." << endl;
+            break;
+
+        default:
+            cout << "Opcion invalida." << endl;
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
+
+int factorial(int n) {
+    if (n == 0)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+int suma(int n) {
+    if (n == 0)
+        return 0;
+    else
+        return n + suma(n - 1);
+}
+
+int sumaImpar(int n) {
+    if (n <= 0)
+        return 0;
+    if (n % 2 == 1)
+        return n + sumaImpar(n - 2);
+    else
+        return sumaImpar(n - 1);
+}
