@@ -1,0 +1,5 @@
+﻿  ConsoleApplication2.cpp
+C:\Users\UPSALAB\source\repos\ConsoleApplication2\ConsoleApplication2\ConsoleApplication2.cpp(11,13): warning C4326: el tipo de valor devuelto de 'main' debe ser 'int' en lugar de 'void'
+  Vector.cpp
+  Generando código...
+  ConsoleApplication2.vcxproj -> C:\Users\UPSALAB\source\repos\ConsoleApplication2\x64\Debug\ConsoleApplication2.exe
