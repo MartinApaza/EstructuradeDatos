@@ -1,0 +1,7 @@
+﻿  ejemplodearea.cpp
+C:\Users\UPSALAB\source\repos\ejemplodearea\ejemplodearea\ejemplodearea.cpp(4,10): fatal  error C1083: No se puede abrir el archivo incluir: 'stdafx.h': No such file or directory
+  triangulo.cpp
+C:\Users\UPSALAB\source\repos\ejemplodearea\ejemplodearea\triangulo.h(12,2): error C2535: 'triangulo::triangulo(void)': función miembro ya definida o declarada
+C:\Users\UPSALAB\source\repos\ejemplodearea\ejemplodearea\triangulo.h(11,2): message : vea la declaración de 'triangulo::triangulo'
+C:\Users\UPSALAB\source\repos\ejemplodearea\ejemplodearea\triangulo.cpp(2,10): fatal  error C1083: No se puede abrir el archivo incluir: 'stdafx.h': No such file or directory
+  Generando código...
