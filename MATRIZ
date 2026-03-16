@@ -1,0 +1,124 @@
+#include <iostream>
+#define MAXROW 100
+#define MAXCOL 100
+using namespace std;
+
+void cargar(int matriz[MAXROW][MAXCOL], int n, int m);
+void mostrar(int matriz[MAXROW][MAXCOL], int n, int m);
+void inversa(int matriz[MAXROW][MAXCOL], int n);
+
+int main()
+{
+    int tamrow, tamcol, matriz[MAXROW][MAXCOL], opcion;
+    do {
+        cout << "ingrese el numero de filas: ";
+        cin >> tamrow;
+        if (tamrow <= 0 || tamrow > MAXROW)
+            cout << "tamano invalido ";
+    } while (tamrow <= 0 || tamrow > MAXROW);
+    do {
+        cout << "ingrese el numero de columnas: ";
+        cin >> tamcol;
+        if (tamcol <= 0 || tamcol > MAXROW)
+            cout << "tamano invalido ";
+    } while (tamcol <= 0 || tamcol > MAXROW);
+    do {
+        cout << "menu" << endl;
+        cout << "1. Cargar" << endl;
+        cout << "2. Mostrar" << endl;
+        cout << "3. inversa" << endl;
+        cout << "0. salir" << endl;
+        cin >> opcion;
+        switch(opcion) {
+            case 1:
+                cargar(matriz, tamrow, tamcol);
+                break;
+            case 2:
+                mostrar(matriz, tamrow, tamcol);
+                break;
+            case 3:
+                if (tamrow != tamcol) {
+                    cout << "No existe inversa porque la matriz no es cuadrada." << endl;
+                }
+                else {
+                    inversa(matriz, tamrow);
+                }
+                break;
+            case 0:
+                cout << "saliendo";
+                break;
+            default :
+                cout << "opcion no valida";
+        }
+    } while (opcion != 0);
+    return 0;
+
+}
+
+void cargar(int matriz[MAXROW][MAXCOL], int n, int m){
+    for(int i=0; i<n; i++) {
+        for(int j=0; j<m; j++) {
+            cout << "matriz " << "[" << i << "]" << "[" << j << "]";
+            cin >> matriz[i][j];
+        }
+    }
+}
+void mostrar(int matriz[MAXROW][MAXCOL], int n, int m) {
+    cout << "la matriz es: " << endl;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            cout << "matriz " << "[" << i << "]" << "[" << j << "]" << " = " << matriz[i][j] << endl;
+        }
+    }
+}
+void inversa(int matriz[MAXROW][MAXCOL], int n)
+{
+    float a[MAXROW][2 * MAXCOL];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            a[i][j] = matriz[i][j];
+        }
+
+        for (int j = n; j < 2 * n; j++) {
+            if (j - n == i)
+                a[i][j] = 1;
+            else
+                a[i][j] = 0;
+        }
+    }
+
+   
+    for (int i = 0; i < n; i++) {
+
+        if (a[i][i] == 0) {
+            cout << "La matriz no tiene inversa (pivote igual a 0)." << endl;
+            return;
+        }
+
+        float pivote = a[i][i];
+
+        for (int j = 0; j < 2 * n; j++) {
+            a[i][j] = a[i][j] / pivote;
+        }
+
+        for (int k = 0; k < n; k++) {
+            if (k != i) {
+                float factor = a[k][i];
+
+                for (int j = 0; j < 2 * n; j++) {
+                    a[k][j] = a[k][j] - factor * a[i][j];
+                }
+            }
+        }
+    }
+
+    cout << "\nLa matriz inversa es:\n";
+
+    for (int i = 0; i < n; i++) {
+        for (int j = n; j < 2 * n; j++) {
+            cout << a[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
