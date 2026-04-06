@@ -1,0 +1,132 @@
+//Pila.cpp//
+#include <iostream>
+#include "Pila.h"
+
+using namespace std;
+
+Pila::Pila()
+{
+    cima = -1;
+}
+
+bool Pila::Apilar(int& elemento)
+{
+    if (cima == MAX - 1)
+    {
+        cout << "Desbordamiento de Pila (Overflow)" << endl;
+        return false;
+    }
+
+    cima++;
+    pila[cima] = elemento;
+    return true;
+}
+
+bool Pila::Desapilar()
+{
+    if (cima == -1)
+    {
+        cerr << "Underflow: pila vacia" << endl;
+        return false;
+    }
+
+    cima--;
+    return true;
+}
+
+bool Pila::CimaPila(int& elemento)
+{
+    if (PilaVacia())
+    {
+        cerr << "Pila vacia" << endl;
+        return false;
+    }
+
+    elemento = pila[cima]; // ✅ CORREGIDO (no desapila)
+    return true;
+}
+
+void Pila::VerPila()
+{
+    for (int i = cima; i >= 0; i--) // mejor de arriba hacia abajo
+    {
+        cout << pila[i] << endl;
+    }
+}
+
+bool Pila::PilaVacia()
+{
+    return cima == -1;
+}
+
+void Pila::LimpiarPila()
+{
+    cima = -1;
+}
+
+bool Pila::Iguales(Pila p)
+{
+    if (cima != p.cima)
+        return false;
+
+    for (int i = 0; i <= cima; i++)
+    {
+        if (pila[i] != p.pila[i])
+            return false;
+    }
+
+    return true;
+}
+//Pila.h//
+#pragma once
+#define MAX 100
+
+class Pila
+{
+private:
+    int pila[MAX];
+    int cima;
+
+public:
+    Pila();
+    bool Apilar(int& elemento);
+    bool Desapilar();
+    bool CimaPila(int& elemento);
+    void LimpiarPila();
+    void VerPila();
+    bool PilaVacia();
+    bool Iguales(Pila p);
+};
+//main//
+#include <iostream>
+#include "Pila.h"
+
+using namespace std;
+
+int main()
+{
+    Pila p;
+    int elemento;
+    bool ok;
+
+    cout << "Ingrese elementos para apilar (-1 termina el programa) : " << endl;
+    cin >> elemento;
+
+    while (elemento != -1)
+    {
+        ok = p.Apilar(elemento);
+
+        if (ok)
+            cout << "Apilado correctamente "<<endl;
+        
+        else
+            cout << "Error: pila llena "<<endl;
+
+        cin >> elemento;
+    }
+
+    cout << "\nPila final:\n";
+    p.VerPila();
+
+    return 0;
+}
