@@ -1,0 +1,149 @@
+//Queue.cpp//
+#include "Queue.h"
+#include <iostream>
+using namespace std;
+#define MAX_SIZE 256 /* capacidad máxima */
+typedef char almacen[MAX_SIZE];
+
+int cabeza; /* puntero de lectura */
+int cola; /* puntero de escritura */
+int ITEMS; /* número de elementos en la lista */
+int ITEMSIZE; /* tamaño de cada elemento */
+almacen alma; /* el almacen */
+
+// constructor
+Queue::Queue() {
+    cabeza = 0;
+    cola = 0;
+    ITEMS = 0;
+    ITEMSIZE = 1;
+}
+
+// destructor
+Queue::~Queue() {}
+
+// regresa 1 (true) si la lista está vacia
+int Queue::empty() { return ITEMS == 0; }
+
+// insertar elemento a la lista
+int Queue::put(int d)
+{
+    if (ITEMS == MAX_SIZE) return -1;
+    if (cola >= MAX_SIZE) { cola = 0; }
+    alma[cola] = d;
+    cola++;
+    ITEMS++;
+    return d;
+}
+
+// retirar elemento de la lista
+int Queue::get()
+{
+    char d;
+    if (empty()) return -1;
+    if (cabeza >= MAX_SIZE) { cabeza = 0; }
+    d = alma[cabeza];
+    cabeza++;
+    ITEMS--;
+    return d;
+}
+
+// regresa el n£mero de elementos en lista
+int Queue::size() { return ITEMS; }
+
+//Queue.h//
+#pragma once
+#include <iostream>
+using namespace std;
+#define MAX_SIZE 256 /* capacidad máxima */
+typedef char almacen[MAX_SIZE];
+
+class Queue {
+
+    int cabeza; /* puntero de lectura */
+    int cola; /* puntero de escritura */
+    int ITEMS; /* número de elementos en la lista */
+    int ITEMSIZE; /* tamaño de cada elemento */
+    almacen alma; /* el almacen */
+
+public:
+    // constructor
+    Queue();
+
+    // destructor
+    ~Queue();
+
+    // regresa 1 (true) si la lista está vacia
+    int empty();
+
+    // insertar elemento a la lista
+    int put(int d);
+
+    // retirar elemento de la lista
+    int get();
+
+    // regresa el n£mero de elementos en lista
+    int size();
+
+}; 
+//main//
+#include <iostream>
+#include "Queue.h"
+using namespace std;
+#define MAX_SIZE 256 /* capacidad máxima */
+typedef char almacen[MAX_SIZE];
+
+void Menu();
+
+// probando la cola
+int main()
+{
+    Queue q;
+    int opcion;
+    do {
+        do {
+            Menu();
+            cout << "Ingrese la opcion: ";
+            cin >> opcion;
+        } while (opcion >= 4 || opcion < 1);
+        switch (opcion) {
+        case 1: {
+            char d;
+            cout << "Ingrese el elemento a insertar: ";
+            cin >> d;
+            q.put(d);
+            break;
+        }
+        case 2: {
+            char d;
+            d = q.get();
+            if (d == -1) {
+                cout << "La lista está vacía" << endl;
+            }
+            else {
+                cout << "Elemento retirado: " << d << endl;
+            }
+            break;
+        }
+        case 3: {
+            cout << "Número de elementos en la lista: " << q.size() << endl;
+            break;
+        }
+        case 4: {
+            cout << "Saliendo..." << endl;
+            break;
+        }
+        default: {
+            cout << "Opción no válida. Intente de nuevo." << endl;
+            break;
+        }
+        }
+    } while (opcion != 4);
+    return 0;
+}
+void Menu() {
+    cout << endl << "1. Insertar elemento a la lista" << endl;
+    cout << "2. Retirar elemento de la lista" << endl;
+    cout << "3. Regresar el numero de elementos en lista" << endl;
+    cout << "4. Salir" << endl;
+}
