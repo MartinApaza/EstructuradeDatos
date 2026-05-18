@@ -1,0 +1,291 @@
+import tkinter as tk
+from tkinter import messagebox
+
+
+# =========================
+# FUNCIONES
+# =========================
+
+def aplicar_comision(monto):
+    """
+    Aplica comisión visible al monto final.
+    """
+    try:
+        porcentaje = float(entry_comision.get())
+
+        if porcentaje < 0:
+            porcentaje = 0
+
+        return monto + (monto * porcentaje / 100)
+
+    except:
+        return monto
+
+
+def bolivianos_a_soles():
+    try:
+        bolivianos = float(entry_monto.get())
+        compra_usdt_bs = float(entry_compra_usdt_bs.get())
+        venta_usdt_soles = float(entry_venta_usdt_soles.get())
+        porcentaje = float(entry_comision.get())
+
+        # Conversión
+        usdt = bolivianos / compra_usdt_bs
+        soles = usdt * venta_usdt_soles
+
+        # Comisión para el librecambista
+        soles_final = aplicar_comision(soles)
+        comision = soles_final - soles
+
+        resultado.set(
+            f"💵 CONVERSIÓN REALIZADA\n"
+            f"USDT obtenidos: {usdt:.4f}\n"
+            f"Cliente recibe: S/ {soles:.2f}\n"
+            f"Tu comisión: S/ {comision:.2f} ({porcentaje}%)\n"
+            f"Total cobrado: S/ {soles_final:.2f}"
+        )
+
+    except ValueError:
+        messagebox.showerror(
+            "Error",
+            "Ingrese únicamente números válidos."
+        )
+
+def soles_a_bolivianos():
+    try:
+        soles = float(entry_monto.get())
+        compra_usdt_bs = float(entry_compra_usdt_bs.get())
+        venta_usdt_soles = float(entry_venta_usdt_soles.get())
+        porcentaje = float(entry_comision.get())
+
+        # Comisión para el librecambista
+        soles_con_comision = aplicar_comision(soles)
+        comision = soles_con_comision - soles
+
+        # Conversión
+        usdt = soles_con_comision / venta_usdt_soles
+        bolivianos = usdt * compra_usdt_bs
+
+        resultado.set(
+            f"💸 CONVERSIÓN REALIZADA\n"
+            f"Cliente entrega: S/ {soles:.2f}\n"
+            f"Tu comisión: S/ {comision:.2f} ({porcentaje}%)\n"
+            f"Total recibido: S/ {soles_con_comision:.2f}\n"
+            f"USDT necesarios: {usdt:.4f}\n"
+            f"Cliente debe pagar: Bs {bolivianos:.2f}"
+        )
+
+    except ValueError:
+        messagebox.showerror(
+            "Error",
+            "Ingrese únicamente números válidos."
+        )
+
+
+# =========================
+# VENTANA PRINCIPAL
+# =========================
+
+ventana = tk.Tk()
+ventana.title("Calculadora USDT")
+ventana.geometry("560x850")
+ventana.configure(bg="#ffe4ef")
+ventana.resizable(False, False)
+
+
+# =========================
+# ESTILOS
+# =========================
+
+COLOR_FONDO = "#ffe4ef"
+COLOR_CARD = "#fff0f6"
+COLOR_TEXTO = "#4a044e"
+
+COLOR_BOTON = "#ec4899"
+COLOR_BOTON_HOVER = "#db2777"
+
+COLOR_BOTON2 = "#f472b6"
+COLOR_BOTON2_HOVER = "#ec4899"
+
+COLOR_RESULTADO = "#831843"
+
+FUENTE = ("Times New Roman", 11)
+FUENTE_TITULO = ("Times New Roman", 22, "bold")
+FUENTE_SUB = ("Times New Roman", 11)
+
+
+# =========================
+# FRAME PRINCIPAL
+# =========================
+
+frame = tk.Frame(
+    ventana,
+    bg=COLOR_CARD,
+    padx=30,
+    pady=30,
+    bd=0
+)
+
+frame.place(relx=0.5, rely=0.5, anchor="center")
+
+
+# =========================
+# TITULO PRINCIPAL
+# =========================
+
+tk.Label(
+    ventana,
+    text=" CONVERSOR FINANCIERO USDT ",
+    font=("Times New Roman", 15, "bold"),
+    bg=COLOR_FONDO,
+    fg="#be185d"
+).pack(pady=15)
+
+
+# =========================
+# TITULO
+# =========================
+
+tk.Label(
+    frame,
+    text="💱 Calculadora Bs ⇄ USDT ⇄ Soles",
+    font=FUENTE_TITULO,
+    bg=COLOR_CARD,
+    fg="#be185d"
+).pack(pady=(0, 10))
+
+
+tk.Label(
+    frame,
+    text="Conversión rápida y automática",
+    font=FUENTE_SUB,
+    bg=COLOR_CARD,
+    fg="#9d174d"
+).pack(pady=(0, 10))
+
+
+# =========================
+# CAMPOS
+# =========================
+
+def crear_input(texto):
+    tk.Label(
+        frame,
+        text=texto,
+        font=FUENTE,
+        bg=COLOR_CARD,
+        fg=COLOR_TEXTO,
+        anchor="w"
+    ).pack(fill="x", pady=(8, 3))
+
+    entry = tk.Entry(
+        frame,
+        font=("Times New Roman", 12),
+        justify="center",
+        relief="flat",
+        bg="#fbcfe8",
+        fg="#4a044e",
+        width=30,
+        bd=0
+    )
+
+    entry.pack(ipady=9)
+    return entry
+
+
+entry_monto = crear_input("💰 Monto:")
+entry_compra_usdt_bs = crear_input("📈 Compra de 1 USDT en Bs:")
+entry_venta_usdt_soles = crear_input("💵 Venta de 1 USDT en Soles:")
+entry_comision = crear_input("🧾 Comisión (%) :")
+
+
+# Valores por defecto
+entry_comision.insert(0, "0")
+
+
+# =========================
+# BOTONES
+# =========================
+
+frame_botones = tk.Frame(frame, bg=COLOR_CARD)
+frame_botones.pack(pady=25)
+
+
+btn_bs_soles = tk.Button(
+    frame_botones,
+    text="Bs ➜ Soles",
+    font=("Times New Roman", 11, "bold"),
+    bg=COLOR_BOTON,
+    fg="white",
+    activebackground=COLOR_BOTON_HOVER,
+    activeforeground="white",
+    relief="flat",
+    padx=20,
+    pady=12,
+    cursor="hand2",
+    command=bolivianos_a_soles
+)
+
+btn_bs_soles.grid(row=0, column=0, padx=10)
+
+
+btn_soles_bs = tk.Button(
+    frame_botones,
+    text="Soles ➜ Bs",
+    font=("Times New Roman", 11, "bold"),
+    bg=COLOR_BOTON2,
+    fg="white",
+    activebackground=COLOR_BOTON2_HOVER,
+    activeforeground="white",
+    relief="flat",
+    padx=20,
+    pady=12,
+    cursor="hand2",
+    command=soles_a_bolivianos
+)
+
+btn_soles_bs.grid(row=0, column=1, padx=10)
+
+
+# =========================
+# RESULTADO
+# =========================
+
+resultado = tk.StringVar()
+
+resultado.set("Ingrese los datos para comenzar.")
+
+label_resultado = tk.Label(
+    frame,
+    textvariable=resultado,
+    font=("Times New Roman", 12, "bold"),
+    bg="#fff",
+    fg=COLOR_RESULTADO,
+    width=38,
+    height=8,
+    justify="center",
+    relief="flat",
+    bd=0
+)
+
+label_resultado.pack(pady=18)
+
+
+# =========================
+# FOOTER
+# =========================
+
+tk.Label(
+    frame,
+    text="Gracias por elegirnos. ",
+    font=("Times New Roman", 9),
+    bg=COLOR_CARD,
+    fg="#9d174d"
+).pack(pady=(10, 0))
+
+
+# =========================
+# INICIAR APP
+# =========================
+
+ventana.mainloop()
