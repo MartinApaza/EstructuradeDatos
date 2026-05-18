@@ -1,0 +1,30 @@
+import tkinter as tk
+
+# Función que se ejecuta cuando se hace clic en el botón
+def saludar():
+  nombre = entrada.get() # obtiene el texto del cuadro
+  etiqueta_resultado.config(text="Hola " + nombre)
+
+# Crear ventana principal
+ventana = tk.Tk()
+ventana.title("Ejemplo GUI")
+ventana.geometry("300x200")
+
+# Widget: etiqueta (texto)
+etiqueta = tk.Label(ventana, text="Ingrese su nombre:")
+etiqueta.pack()
+
+# Widget: cuadro de texto
+entrada = tk.Entry(ventana)
+entrada.pack()
+
+# Widget: botón
+boton = tk.Button(ventana, text="Saludar", command=saludar)
+boton.pack()
+
+# Widget: etiqueta para mostrar resultado
+etiqueta_resultado = tk.Label(ventana, text="")
+etiqueta_resultado.pack()
+
+# Ejecutar la aplicación
+ventana.mainloop()
