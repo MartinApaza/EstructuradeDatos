@@ -1,0 +1,171 @@
+#pragma once
+#include <iostream>
+using namespace std;
+
+typedef char DATA_TYPE;
+
+class Nodo {
+public:
+    DATA_TYPE data;
+    Nodo* next;
+    Nodo* prev;
+
+    Nodo(DATA_TYPE valor);
+};
+
+////Nodo.cpp/////
+#include "Nodo.h"
+
+Nodo::Nodo(DATA_TYPE valor) {
+    data  = valor;
+    next  = nullptr;
+    prev  = nullptr;
+}
+
+////ColaDoble.h///
+#pragma once
+#include <iostream>
+#include "Nodo.h"
+using namespace std;
+
+class ColaDoble {
+private:
+    Nodo* cabeza;
+    Nodo* cola;
+    int   items;
+
+public:
+    ColaDoble();
+    ~ColaDoble();
+
+    void      agregarAtras (DATA_TYPE valor);
+    void      agregarFrente(DATA_TYPE valor);
+    DATA_TYPE quitarFrente ();
+    DATA_TYPE quitarAtras  ();
+    bool      estaVacia    () const;
+    void      mostrar      () const;
+};
+
+////.ColaDoble.cpp////
+#include "ColaDoble.h"
+
+// Constructor
+ColaDoble::ColaDoble() {
+    cabeza = nullptr;
+    cola   = nullptr;
+    items  = 0;
+}
+
+// Destructor
+ColaDoble::~ColaDoble() {
+    while (!estaVacia()) {
+        quitarFrente();
+    }
+}
+
+// Agregar al final
+void ColaDoble::agregarAtras(DATA_TYPE valor) {
+    Nodo* temp = new Nodo(valor);
+    if (!cabeza) {
+        cabeza = cola = temp;
+    } else {
+        cola->next = temp;
+        temp->prev = cola;
+        cola = temp;
+    }
+    items++;
+}
+
+// Agregar al frente
+void ColaDoble::agregarFrente(DATA_TYPE valor) {
+    Nodo* temp = new Nodo(valor);
+    if (!cabeza) {
+        cabeza = cola = temp;
+    } else {
+        cabeza->prev = temp;
+        temp->next   = cabeza;
+        cabeza = temp;
+    }
+    items++;
+}
+
+// Quitar del frente
+DATA_TYPE ColaDoble::quitarFrente() {
+    if (estaVacia()) return -1;
+
+    DATA_TYPE valor = cabeza->data;
+    Nodo* temp      = cabeza;
+    cabeza          = cabeza->next;
+
+    if (cabeza) cabeza->prev = nullptr;
+    else        cola = nullptr;
+
+    delete temp;
+    items--;
+    return valor;
+}
+
+// Quitar del fondo
+DATA_TYPE ColaDoble::quitarAtras() {
+    if (estaVacia()) return -1;
+
+    DATA_TYPE valor = cola->data;
+    Nodo* temp      = cola;
+    cola            = cola->prev;
+
+    if (cola) cola->next = nullptr;
+    else      cabeza = nullptr;
+
+    delete temp;
+    items--;
+    return valor;
+}
+
+// ¿Está vacía?
+bool ColaDoble::estaVacia() const {
+    return items == 0;
+}
+
+// Mostrar elementos
+void ColaDoble::mostrar() const {
+    if (!cabeza) {
+        cout << "Cola vacía.\n";
+        return;
+    }
+    Nodo* actual = cabeza;
+    cout << "Cola: ";
+    while (actual) {
+        cout << "[" << actual->data << "] ";
+        actual = actual->next;
+    }
+    cout << endl;
+}
+
+////main/////
+#include <iostream>
+#include "Nodo.h"
+#include "ColaDoble.h"
+using namespace std;
+
+int main() {
+    ColaDoble cd;
+    DATA_TYPE d;
+
+    // Insertar letras A-Z al final
+    for (d = 'A'; d <= 'Z'; d++)
+        cd.agregarAtras(d);
+
+    // Insertar dígitos 0-9 al frente
+    for (d = 9; d >= 0; d--)
+        cd.agregarFrente(d + '0');
+
+    cd.mostrar();
+
+    // Vaciar desde el frente
+    cout << "\nVaciando la cola:\n";
+    while (!cd.estaVacia())
+        cout << cd.quitarFrente() << " ";
+
+    cout << "\nFin del programa.\n";
+    return 0;
+}
