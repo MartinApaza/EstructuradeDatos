@@ -1,0 +1,194 @@
+//COLA DINAMICA
+
+//clase Dato
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Dato {
+public:
+    double codigo;
+    string nombre;
+    string carrera;
+};
+
+//clase Nodo
+#include <iostream>
+#include "Dato.h"
+using namespace std;
+
+class Nodo {
+public:
+    Dato dato;
+    Nodo* sig;
+};
+
+//clase Cola
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Cola {
+    Nodo* inicio;
+    Nodo* fin;
+
+public:
+    Cola();
+    void encolar();
+    void desencolar();
+    void mostrar();
+    void vacia();
+};
+
+//.cpp cola
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include "Nodo.h"
+#include "Cola.h"
+
+using namespace std;
+
+Cola::Cola() {
+    inicio = NULL;
+    fin = NULL;
+}
+
+void Cola::encolar() {
+    Nodo* aux = new Nodo;
+
+    system("cls");
+    cout << "Codigo: ";
+    cin >> aux->dato.codigo;
+
+    cout << "Nombre: ";
+    cin.ignore();
+    getline(cin, aux->dato.nombre);
+
+    cout << "Carrera: ";
+    getline(cin, aux->dato.carrera);
+
+    aux->sig = NULL;
+
+    if (inicio == NULL) {
+        inicio = fin = aux;
+    }
+    else {
+        fin->sig = aux;
+        fin = aux;
+    }
+
+    cout << "\nElemento encolado correctamente!\n";
+    system("pause");
+}
+
+void Cola::desencolar() {
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        Nodo* temp = inicio;
+
+        system("cls");
+        cout << "Elemento eliminado:\n";
+        cout << temp->dato.codigo << " - "
+             << temp->dato.nombre << " - "
+             << temp->dato.carrera << "\n";
+
+        inicio = inicio->sig;
+
+        if (inicio == NULL) {
+            fin = NULL;
+        }
+
+        delete temp; 
+
+        system("pause");
+    }
+}
+
+void Cola::mostrar() {
+    Nodo* aux = inicio;
+
+    if (inicio == NULL) {
+        system("cls");
+        cout << "\nLa cola esta vacia!\n\n";
+        system("pause");
+    }
+    else {
+        system("cls");
+        cout << "Elementos en la cola:\n\n";
+
+        while (aux != NULL) {
+            cout << aux->dato.codigo << " - "
+                 << aux->dato.nombre << " - "
+                 << aux->dato.carrera << "\n";
+            aux = aux->sig;
+        }
+
+        system("pause");
+    }
+}
+
+void Cola::vacia() {
+    system("cls");
+
+    if (inicio == NULL)
+        cout << "La cola esta vacia\n";
+    else
+        cout << "La cola tiene elementos\n";
+
+    system("pause");
+}
+
+//main.cpp
+#include <iostream>
+#include <string>
+#include <stdlib.h>
+#include "Nodo.h"
+#include "Cola.h"
+
+using namespace std;
+
+int main() {
+    Cola c;
+    int opcion;
+
+    do {
+        system("cls");
+        cout << "[:] Cola en lista enlazada\n";
+        cout << "[1] Encolar\n";
+        cout << "[2] Desencolar\n";
+        cout << "[3] Mostrar\n";
+        cout << "[4] Cola vacia?\n";
+        cout << "[0] Salir\n";
+        cout << "\nIngresa tu opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+        case 1:
+            c.encolar();
+            break;
+        case 2:
+            c.desencolar();
+            break;
+        case 3:
+            c.mostrar();
+            break;
+        case 4:
+            c.vacia();
+            break;
+        case 0:
+            return 0;
+        default:
+            cout << "Opcion incorrecta\n";
+            system("pause");
+            break;
+        }
+
+    } while (opcion != 0);
+
+    return 0;
+}
