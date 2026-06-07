@@ -1,0 +1,6 @@
+1;Carla;Ramirez;28;62.5;1.65;78451200;carla.ramirez@mail.com;2
+2;Beto;Suarez;34;90.2;1.75;78451201;beto.suarez@mail.com;1
+3;Lucia;Fernandez;22;55;1.6;78451202;lucia.f@mail.com;3
+4;Marco;Gutierrez;41;82;1.78;78451203;marco.g@mail.com;2
+5;Sofia;Mendez;30;68;1.7;78451204;sofia.mendez@mail.com;3
+6;Diego;Rojas;26;77.8;1.82;78451205;diego.rojas@mail.com;1
